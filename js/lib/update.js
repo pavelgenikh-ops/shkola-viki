@@ -64,14 +64,28 @@
     });
   }
 
+  /** Какая версия сейчас лежит на сервере (читаем из свежего index.html) */
+  async function versionOnServer() {
+    try {
+      const r = await fetch('index.html?ts=' + Date.now(), { cache: 'no-store' });
+      const t = await r.text();
+      const m = t.match(/app\.js\?v=([a-z0-9]+)/i);
+      return m ? m[1] : null;
+    } catch (e) { return null; }
+  }
+
   /** Проверить обновление вручную (кнопка в «Родителям» или при возврате на вкладку) */
-  function check(loud) {
-    if (!reg) return Promise.resolve(false);
-    return reg.update().then(() => {
-      const has = !!reg.waiting;
-      if (!has && loud) bar('Установлена самая свежая версия', 'Хорошо', hideBar);
-      return has;
-    }).catch(() => false);
+  async function check(loud) {
+    if (!reg) return false;
+    try { await reg.update(); } catch (e) { /* нет сети — не страшно */ }
+    if (reg.waiting) return true;                       // новая версия уже готова
+    const server = await versionOnServer();
+    if (server && server !== VERSION) {                 // на сервере лежит другая версия — перезагрузимся на неё
+      bar('Появилась новая версия приложения', 'Обновить', () => { hideBar(); location.reload(); });
+      return true;
+    }
+    if (loud) bar('Установлена самая свежая версия', 'Хорошо', hideBar);
+    return false;
   }
 
   navigator.serviceWorker.register('sw.js?v=' + VERSION).then(watch).catch(() => {});

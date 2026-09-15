@@ -65,6 +65,7 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;                  // чужие адреса не трогаем
+  if (url.pathname.endsWith('/sw.js')) return;                 // сам служебный скрипт всегда из сети
   const isPage = req.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('.html');
   e.respondWith(isPage ? networkFirst(req) : cacheFirst(req));
 });
