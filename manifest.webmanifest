@@ -1,0 +1,26 @@
+{
+  "name": "Школа Вики — уроки 2 класса",
+  "short_name": "Школа Вики",
+  "description": "Обучающая игра по программе 2 класса: математика, русский, чтение, окружающий мир, английский и логика",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f0ff",
+  "theme_color": "#6c5ce7",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

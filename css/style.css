@@ -463,6 +463,17 @@ table.stats td.num { text-align: right; font-weight: 800; }
 .daily .d { font-weight: 700; font-size: 15px; opacity: .85; }
 .daily.done { background: linear-gradient(135deg, #d9f7e5, #a8ecc5); box-shadow: 0 8px 0 #4fa97a, var(--shadow); color: #1a4a2d; }
 
+/* плашка обновления приложения (v2) */
+.update-bar {
+  position: fixed; left: 50%; bottom: 18px; transform: translate(-50%, 140%); z-index: 90;
+  display: flex; align-items: center; gap: 16px; background: #fff; border-radius: 22px;
+  padding: 14px 18px 14px 24px; box-shadow: 0 10px 30px rgba(80,60,140,.28); font-weight: 800; font-size: 19px;
+  transition: transform .35s cubic-bezier(.2,.9,.3,1.2); max-width: calc(100vw - 24px);
+}
+.update-bar.show { transform: translate(-50%, 0); }
+.update-bar .ub-text { line-height: 1.25; }
+@media (max-width: 760px) { .update-bar { font-size: 17px; padding: 12px 14px 12px 18px; gap: 10px; } }
+
 .toast { position: fixed; top: 18px; left: 50%; transform: translateX(-50%) translateY(-120px); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 30px; font-weight: 800; z-index: 200; transition: transform .3s; box-shadow: var(--shadow); }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
