@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Школа Вики на телефоне</title>
+<style>
+  body { font-family: 'Nunito', 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #fff5fb, #e9f3ff 55%, #fff9e6); color: #2d2a4a; margin: 0; padding: 26px; font-size: 19px; min-height: 100vh; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 34px; color: #6c5ce7; margin: 0 0 4px; }
+  .sub { color: #7b7a96; margin: 0 0 20px; font-weight: 700; }
+  .card { background: #fff; border-radius: 22px; padding: 22px 26px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(80,60,140,.12); }
+  .addr { font-size: 26px; font-weight: 900; color: #4f8ef7; word-break: break-all; margin: 6px 0 12px; }
+  .qr { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+  .qr img { border: 12px solid #fff; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.14); image-rendering: pixelated; }
+  ol, ul { line-height: 1.75; }
+  code { background: #f3f1fb; padding: 2px 9px; border-radius: 7px; font-size: 17px; }
+  .note { background: #fff9e6; border: 3px dashed #ffd27a; border-radius: 18px; padding: 16px 20px; }
+  b.ok { color: #1f9d55; }
+  .btn { display: inline-block; background: #6c5ce7; color: #fff; text-decoration: none; font-weight: 900; padding: 14px 26px; border-radius: 16px; box-shadow: 0 5px 0 #4b3fc9; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎒 Школа Вики на телефоне</h1>
+  <p class="sub">Наведи камеру телефона на QR-код — приложение откроется прямо в браузере.</p>
+
+  <div class="card qr">
+    <div>
+      <div style="font-weight:800">Адрес приложения:</div>
+      <div class="addr" id="addr">…</div>
+      <a class="btn" id="open" href="#" target="_blank" rel="noopener">Открыть здесь</a>
+    </div>
+    <div id="qr"></div>
+  </div>
+
+  <div class="card">
+    <b style="font-size:22px">Как заниматься с телефона</b>
+    <ol>
+      <li>Наведи камеру на QR-код и открой ссылку.</li>
+      <li>В браузере нажми меню и выбери <b>«Добавить на главный экран»</b> — появится иконка, приложение будет открываться как обычное.</li>
+      <li>Занимайся где угодно: интернет нужен только при первом открытии, дальше страница работает и без него.</li>
+    </ol>
+  </div>
+
+  <div class="card note">
+    <b style="font-size:21px">Что нужно знать</b>
+    <ul>
+      <li><b class="ok">Компьютер включать не нужно</b> — приложение лежит в интернете.</li>
+      <li>Прогресс на телефоне <b>свой</b>: звёзды с компьютера туда не переносятся. Перенести можно через «Родителям → Сохранить прогресс в файл».</li>
+      <li>На телефоне работает голос самого телефона, а не нейросетевой (он весит 146 МБ и остаётся на компьютере). Характер голоса можно выбрать в приложении.</li>
+    </ul>
+  </div>
+</div>
+
+<script src="js/lib/qrcode.js"></script>
+<script>
+(function () {
+  // адрес приложения: тот же, откуда открыта эта страница
+  var url = location.href.replace(/телефон\.html.*$/, '').replace(/[^/]*$/, '');
+  if (!/^https?:/.test(url) || /^file:/.test(location.protocol)) {
+    // страницу открыли файлом с диска — показываем адрес в интернете
+    url = 'https://pavelgenikh-ops.github.io/shkola-viki/';
+  }
+  document.getElementById('addr').textContent = url;
+  document.getElementById('open').href = url;
+  try {
+    var qr = qrcode(0, 'M');
+    qr.addData(url); qr.make();
+    document.getElementById('qr').innerHTML = qr.createImgTag(8, 10);
+  } catch (e) {
+    document.getElementById('qr').textContent = 'QR-код не получился — набери адрес вручную.';
+  }
+})();
+</script>
+</body>
+</html>
