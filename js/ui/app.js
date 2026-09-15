@@ -542,7 +542,7 @@
       voiceCards(set) +
       voiceRow('ru-RU', 'voiceRu', 'Русский голос', set) + voiceRow('en-US', 'voiceEn', 'Английский голос', set) +
       '<div class="muted" style="font-size:13px;font-weight:700;margin-top:6px">Мягкие голоса (Natural) есть в Microsoft Edge — запускай через «Запустить.bat». В Chrome нужен интернет для голосов Google.</div>' +
-      '<div class="check-row" style="justify-content:flex-start"><button class="btn btn-ghost" id="pa-export">💾 Сохранить прогресс в файл</button><button class="btn btn-ghost" id="pa-import">📂 Загрузить из файла</button></div>' +
+      '<div class="check-row" style="justify-content:flex-start"><button class="btn btn-ghost" id="pa-phone">📱 Открыть на телефоне</button><button class="btn btn-ghost" id="pa-export">💾 Сохранить прогресс в файл</button><button class="btn btn-ghost" id="pa-import">📂 Загрузить из файла</button></div>' +
       '<div class="check-row" style="justify-content:flex-start"><button class="btn btn-ghost" id="pa-reset">♻️ Сбросить прогресс</button><button class="btn btn-ghost" id="pa-delete">🗑️ Удалить ученика</button></div>' +
       '<input type="file" id="pa-file" accept="application/json" class="hidden"></div></div>' +
       '<div class="card" style="margin-top:14px"><h3>По предметам</h3><table class="stats"><tr><th>Предмет</th><th>Уроков начато</th><th>Звёзд</th><th>Заданий</th><th>Точность</th></tr>' + rows + '</table></div>' +
@@ -568,6 +568,7 @@
     root.querySelectorAll('button[data-try]').forEach(b => {
       b.onclick = () => S.audio.speak(b.dataset.try === 'ru-RU' ? 'Привет! Я помогу тебе учиться. Давай начнём урок!' : 'Hello! I am a cat. I can jump and run.', b.dataset.try);
     });
+    q('#pa-phone').onclick = () => { S.audio.play('click'); window.open('телефон.html', '_blank'); };
     q('#pa-export').onclick = () => {
       const blob = new Blob([ST.exportJSON()], { type: 'application/json' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
